@@ -1,5 +1,3 @@
-import SimpleBarReact from 'simplebar-react';
-
 import PropTypes from 'prop-types';
 import { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -17,6 +15,8 @@ import NavSection from '../components/nav-section';
 import navConfig from './config';
 
 import jwt_decode from 'jwt-decode';
+
+import { makeStyles } from '@mui/styles';
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +40,35 @@ Nav.propTypes = {
   onCloseNav: PropTypes.func,
 };
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    overflowY: 'scroll',
+    scrollbarWidth: 'thin',
+    scrollbarColor: 'red',
+    '&::-webkit-scrollbar': {
+      width: '8px',
+    },
+    '&::-webkit-scrollbar-track': {
+      background: '#f1f1f1',
+      maxHeight: '150px' /* set the maximum height of the track */,
+      minHeight: '50px' /* set the minimum height of the track */,
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: '#888',
+      borderRadius: '10px',
+      width: '10px',
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      background: '#555',
+    },
+  },
+}));
+
 export default function Nav({ openNav, onCloseNav }) {
+  const classes = useStyles();
   const { pathname } = useLocation();
   const isDesktop = useResponsive('up', 'lg');
   const { token } = useContext(Authen);
@@ -62,7 +90,8 @@ export default function Nav({ openNav, onCloseNav }) {
   }, [pathname]);
 
   const renderContent = (
-    <Scrollbar
+    <div
+      className={classes.root}
       sx={{
         height: '100vh',
         '& .simplebar-content': { height: '100vh', display: 'flex', flexDirection: 'column' },
@@ -94,7 +123,7 @@ export default function Nav({ openNav, onCloseNav }) {
           <Box component="img" src={logo} sx={{ width: 200, position: 'absolute', top: -100 }} />
         </Stack>
       </Box>
-    </Scrollbar>
+    </div>
   );
 
   return (

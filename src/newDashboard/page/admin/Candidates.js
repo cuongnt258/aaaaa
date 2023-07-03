@@ -36,6 +36,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 // Dialog
 import AlertDialog from '../../components/alertDialog';
+import { makeStyles } from '@mui/styles';
 
 // ----------------------------------------------------------------------
 
@@ -79,9 +80,37 @@ function applySortFilter(array, comparator, query) {
   }
   return stabilizedThis?.map((el) => el[0]);
 }
-//getICon
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    overflowY: 'scroll',
+    scrollbarWidth: 'thin',
+    scrollbarColor: 'red',
+    '&::-webkit-scrollbar': {
+      width: '8px',
+    },
+    '&::-webkit-scrollbar-track': {
+      background: '#f1f1f1',
+      maxHeight: '150px' /* set the maximum height of the track */,
+      minHeight: '50px' /* set the minimum height of the track */,
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: '#888',
+      borderRadius: '10px',
+      width: '10px',
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      background: '#555',
+    },
+  },
+}));
 
 export default function Candidates({ history }) {
+  const classes = useStyles();
+
   const dispatch = useDispatch();
   const refDialog = useRef();
   const navigate = useNavigate();
