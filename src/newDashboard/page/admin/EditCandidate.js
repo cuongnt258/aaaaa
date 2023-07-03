@@ -1,4 +1,4 @@
-import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   Box,
   Card,
@@ -10,11 +10,12 @@ import {
   Button,
   Select,
   MenuItem,
-} from "@mui/material";
-import ButtonCustomize from "assets/theme/components/button/ButtonCustomize";
-import Page from "components/Layout/Page";
-import { useEffect, useRef } from "react";
-import { CustomizedToast } from "components/toast/ToastCustom";
+  InputLabel,
+} from '@mui/material';
+import ButtonCustomize from 'assets/theme/components/button/ButtonCustomize';
+import Page from 'components/Layout/Page';
+import { useEffect, useRef, useState } from 'react';
+import { CustomizedToast } from 'components/toast/ToastCustom';
 
 export default function EditCandidate() {
   const location = useLocation();
@@ -27,21 +28,26 @@ export default function EditCandidate() {
 
   const { candidate: candidateDetail } = location.state || {};
 
+  const [age, setAge] = useState(5);
+
   useEffect(() => {
     if (candidateDetail) {
-      console.log("> candidateDetail:", candidateDetail);
-      const { fullName = "", address = "", groupId = "", campaignId = "" } = candidateDetail || {};
+      const { fullName = '', address = '', groupId = '', campaignId = '' } = candidateDetail || {};
       refFullName.current.value = fullName;
       refAddress.current.value = address;
       refGroupId.current.value = groupId;
       refCampaignId.current.value = campaignId;
     } else {
       CustomizedToast({
-        message: "Không có dữ liệu",
-        type: "ERROR",
+        message: 'Không có dữ liệu',
+        type: 'ERROR',
       });
     }
   }, []);
+
+  const onChangeAge = (event) => {
+    setAge(event.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -49,11 +55,11 @@ export default function EditCandidate() {
 
     alert(
       JSON.stringify({
-        fullName: data.get("fullName"),
-        address: data.get("address"),
-        groupId: data.get("groupId"),
-        campaignId: data.get("campaignId"),
-        age: data.get("age"),
+        fullName: data.get('fullName'),
+        address: data.get('address'),
+        groupId: data.get('groupId'),
+        campaignId: data.get('campaignId'),
+        age,
       })
     );
   };
@@ -75,11 +81,10 @@ export default function EditCandidate() {
         <Container maxWidth="sm">
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -94,24 +99,10 @@ export default function EditCandidate() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    inputRef={refAddress}
-                    required
-                    fullWidth
-                    name="address"
-                    label="Address"
-                    id="address"
-                  />
+                  <TextField inputRef={refAddress} required fullWidth name="address" label="Address" id="address" />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    inputRef={refGroupId}
-                    required
-                    fullWidth
-                    name="groupId"
-                    label="Group ID"
-                    id="groupId"
-                  />
+                  <TextField inputRef={refGroupId} required fullWidth name="groupId" label="Group ID" id="groupId" />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -122,6 +113,16 @@ export default function EditCandidate() {
                     label="Campaign ID"
                     id="campaignId"
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <Select fullWidth labelId="ageLabel" id="age" value={age} label="Age" onChange={onChangeAge}>
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
                 </Grid>
               </Grid>
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>

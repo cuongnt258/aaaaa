@@ -1,7 +1,7 @@
-import { Link as RouterLink } from "react-router-dom";
-import { Box, Card, Container, Grid, Stack, TextField, Typography, Button } from "@mui/material";
-import ButtonCustomize from "assets/theme/components/button/ButtonCustomize";
-import Page from "components/Layout/Page";
+import { Link as RouterLink } from 'react-router-dom';
+import { Box, Card, Container, Grid, Stack, TextField, Typography, Button } from '@mui/material';
+import ButtonCustomize from 'assets/theme/components/button/ButtonCustomize';
+import Page from 'components/Layout/Page';
 
 export default function AddCandidate() {
   const handleSubmit = (event) => {
@@ -9,13 +9,12 @@ export default function AddCandidate() {
     const data = new FormData(event.currentTarget);
 
     console.log({
-      userName: data.get("userName"),
-      password: data.get("password"),
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      address: data.get("address"),
-      groupId: data.get("groupId"),
-      campaignId: data.get("campaignId"),
+      userName: data.get('userName'),
+      password: data.get('password'),
+      fullName: data.get('fullName'),
+      address: data.get('address'),
+      groupId: data.get('groupId'),
+      campaignId: data.get('campaignId'),
     });
   };
 
@@ -36,11 +35,10 @@ export default function AddCandidate() {
         <Container maxWidth="sm">
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
@@ -55,14 +53,7 @@ export default function AddCandidate() {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                  />
+                  <TextField required fullWidth name="password" label="Password" type="password" id="password" />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField required fullWidth name="fullName" label="Full name" id="fullName" />
@@ -74,13 +65,7 @@ export default function AddCandidate() {
                   <TextField required fullWidth name="groupId" label="Group ID" id="groupId" />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="campaignId"
-                    label="Campaign ID"
-                    id="campaignId"
-                  />
+                  <TextField required fullWidth name="campaignId" label="Campaign ID" id="campaignId" />
                 </Grid>
               </Grid>
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
