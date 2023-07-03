@@ -26,9 +26,9 @@ export default function EditCandidate() {
   const refGroupId = useRef(null);
   const refCampaignId = useRef(null);
 
-  const { candidate: candidateDetail } = location.state || {};
-
   const [age, setAge] = useState(5);
+
+  const { candidate: candidateDetail } = location.state || {};
 
   useEffect(() => {
     if (candidateDetail) {
@@ -63,6 +63,8 @@ export default function EditCandidate() {
       })
     );
   };
+
+  const onClickCancel = () => navigate('/admin/candidates');
 
   return (
     <Page title="Danh sách ứng cử viên">
@@ -125,9 +127,18 @@ export default function EditCandidate() {
                   </Select>
                 </Grid>
               </Grid>
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Cập nhật
-              </Button>
+              <Grid container spacing={2}>
+                <Grid item sm={6}>
+                  <Button onClick={onClickCancel} fullWidth variant="contained" color="error" sx={{ mt: 3, mb: 2 }}>
+                    Hủy
+                  </Button>
+                </Grid>
+                <Grid item sm={6}>
+                  <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                    Cập nhật
+                  </Button>
+                </Grid>
+              </Grid>
             </Box>
           </Box>
         </Container>

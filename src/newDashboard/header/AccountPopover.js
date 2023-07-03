@@ -47,7 +47,6 @@ export default function AccountPopover() {
       return arr;
     }
   };
-  console.log(hanldenullToken()[0]);
 
   hanldenullToken();
 

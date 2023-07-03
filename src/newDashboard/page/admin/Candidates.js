@@ -1,6 +1,6 @@
-import { filter } from "lodash";
-import React, { useState, useRef, useCallback, useEffect } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { filter } from 'lodash';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 // material
 import {
   Avatar,
@@ -16,37 +16,37 @@ import {
   TablePagination,
   TableRow,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 // components
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
-import ButtonCustomize from "assets/theme/components/button/ButtonCustomize";
-import Iconify from "assets/theme/components/icon/Iconify";
-import Page from "components/Layout/Page";
-import SearchNotFound from "components/Layout/SearchNotFound";
-import { Authen } from "context/authenToken/AuthenToken";
-import { callAPIgetListCandidates } from "context/redux/action/action";
-import Campaignlistoolbar from "layouts/sections/Campaignlistoolbar";
-import UserListHead from "layouts/sections/UserListHead";
-import { useContext } from "react";
+import ButtonCustomize from 'assets/theme/components/button/ButtonCustomize';
+import Iconify from 'assets/theme/components/icon/Iconify';
+import Page from 'components/Layout/Page';
+import SearchNotFound from 'components/Layout/SearchNotFound';
+import { Authen } from 'context/authenToken/AuthenToken';
+import { callAPIgetListCandidates } from 'context/redux/action/action';
+import Campaignlistoolbar from 'layouts/sections/Campaignlistoolbar';
+import UserListHead from 'layouts/sections/UserListHead';
+import { useContext } from 'react';
 // Icon
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import EditIcon from "@mui/icons-material/Edit";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/Edit';
 
 // Dialog
-import AlertDialog from "../../components/alertDialog";
+import AlertDialog from '../../components/alertDialog';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: "avatarUrl", name: "Hình", alignRight: false },
-  { id: "fullName", label: "Tên", alignRight: false },
-  { id: "email", label: "Email", alignRight: false },
-  { id: "gender", label: "Giới tính", alignRight: false },
-  { id: "phone", label: "Số điện thoại", alignRight: false },
-  { id: "description", label: "Tham gia chiến dịch", alignRight: false },
-  { id: "Action", label: "Action", alignRight: true },
+  { id: 'avatarUrl', name: 'Hình', alignRight: false },
+  { id: 'fullName', label: 'Tên', alignRight: false },
+  { id: 'email', label: 'Email', alignRight: false },
+  { id: 'gender', label: 'Giới tính', alignRight: false },
+  { id: 'phone', label: 'Số điện thoại', alignRight: false },
+  { id: 'description', label: 'Tham gia chiến dịch', alignRight: false },
+  { id: 'Action', label: 'Action', alignRight: true },
 ];
 
 // ----------------------------------------------------------------------
@@ -62,7 +62,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === "desc"
+  return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -75,51 +75,47 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(
-      array,
-      (candidate) => candidate.fullName.toLowerCase().indexOf(query.toLowerCase()) !== -1
-    );
+    return filter(array, (candidate) => candidate.fullName.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
   return stabilizedThis?.map((el) => el[0]);
 }
 //getICon
 
-export default function CandidiateAccountList({ history }) {
-  console.log("> history:", history);
+export default function Candidates({ history }) {
   const dispatch = useDispatch();
-
   const refDialog = useRef();
-
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { token } = useContext(Authen);
 
   const [page, setPage] = useState(0);
-  const [order, setOrder] = useState("asc");
+  const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
-  const [orderBy, setOrderBy] = useState("name");
-  const [filterName, setFilterName] = useState("");
+  const [orderBy, setOrderBy] = useState('name');
+  const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(20);
-
-  useEffect(() => {
-    const callAPI = async () => {
-      await dispatch(callAPIgetListCandidates(token));
-    };
-    callAPI();
-  }, [dispatch, token]);
 
   const candidate = useSelector(({ candidate }) => candidate) || [];
 
+  useEffect(() => {
+    callAPI();
+  }, [token]);
+
+  const callAPI = async () => {
+    await dispatch(callAPIgetListCandidates(token));
+  };
+
   const getOptions = () => [
-    { id: "active", title: "Đang bán" },
-    { id: "inActive", title: "Ngưng bán" },
-    { id: "All", title: "Tất cả" },
+    { id: 'active', title: 'Đang bán' },
+    { id: 'inActive', title: 'Ngưng bán' },
+    { id: 'All', title: 'Tất cả' },
   ];
 
   //========================================================
   const handleRequestSort = (_, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
   const handleSelectAllClick = (event) => {
@@ -143,7 +139,7 @@ export default function CandidiateAccountList({ history }) {
   const filterCandidate = applySortFilter(candidate, getComparator(order, orderBy), filterName);
 
   const handleDate = (time) => {
-    const a = new Date(time).toLocaleDateString().split("/");
+    const a = new Date(time).toLocaleDateString().split('/');
     if (a[0] < 10) {
       return `${a[2]}-${a[1]}-0${a[0]}`;
     } else return `${a[2]}-${a[1]}-${a[0]}`;
@@ -152,7 +148,7 @@ export default function CandidiateAccountList({ history }) {
   // Xử lí khi ấn xóa, hàm bên dưới dùng ref để gán tiêu đề và nội dung cho ref (có thể xem logic tại AlertDialog.js)
   const onClickDelete = (candidateId) => {
     refDialog.current?.show(
-      "Bạn có muốn xóa ứng cử viên này?",
+      'Bạn có muốn xóa ứng cử viên này?',
       'Sau khi xóa, ứng cử viên sẽ không thể khôi phục, hãy chắc chắn rằng bạn muôn xóa trước khi ấn "Đồng ý"'
     );
   };
@@ -207,39 +203,32 @@ export default function CandidiateAccountList({ history }) {
                 onSelectAllClick={handleSelectAllClick}
               />
               <TableBody>
-                {filterCandidate
-                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    const { candidateId, fullName, email, gender, description, avatarUrl, phone } =
-                      row;
-                    const handleClickDelete = () => onClickDelete(candidateId);
-                    const handleClickEdit = () => onClickEdit(row);
+                {filterCandidate?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                  const { candidateId, fullName, email, gender, description, avatarUrl, phone } = row;
+                  const handleClickDelete = () => onClickDelete(candidateId);
+                  const handleClickEdit = () => onClickEdit(row);
 
-                    return (
-                      <TableRow hover key={candidateId} tabIndex={-1} role="checkbox">
-                        <TableCell>
-                          <Avatar alt={avatarUrl} src={avatarUrl} />
-                        </TableCell>
-                        <TableCell align="left">{fullName}</TableCell>
-                        <TableCell align="left">{email}</TableCell>
-                        <TableCell align="left">{gender}</TableCell>
-                        <TableCell align="left">{phone}</TableCell>
-                        <TableCell align="left">{description}</TableCell>
-                        <TableCell align="left" sx={{ width: "13%" }}>
-                          <IconButton
-                            aria-label="delete"
-                            color="secondary"
-                            onClick={handleClickDelete}
-                          >
-                            <DeleteOutlineIcon />
-                          </IconButton>
-                          <IconButton aria-label="edit" color="primary" onClick={handleClickEdit}>
-                            <EditIcon />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                  return (
+                    <TableRow hover key={candidateId} tabIndex={-1} role="checkbox">
+                      <TableCell>
+                        <Avatar alt={avatarUrl} src={avatarUrl} />
+                      </TableCell>
+                      <TableCell align="left">{fullName}</TableCell>
+                      <TableCell align="left">{email}</TableCell>
+                      <TableCell align="left">{gender}</TableCell>
+                      <TableCell align="left">{phone}</TableCell>
+                      <TableCell align="left">{description}</TableCell>
+                      <TableCell align="left" sx={{ width: '13%' }}>
+                        <IconButton aria-label="delete" color="secondary" onClick={handleClickDelete}>
+                          <DeleteOutlineIcon />
+                        </IconButton>
+                        <IconButton aria-label="edit" color="primary" onClick={handleClickEdit}>
+                          <EditIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
               {isUserNotFound && (
                 <TableBody>
@@ -262,9 +251,9 @@ export default function CandidiateAccountList({ history }) {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
             // fix languge in footer tables
-            labelRowsPerPage={"Số hàng trên một trang"}
+            labelRowsPerPage={'Số hàng trên một trang'}
             labelDisplayedRows={({ from, to, count }) => {
-              return "" + from + "-" + to + " của " + count;
+              return '' + from + '-' + to + ' của ' + count;
             }}
           />
         </Card>

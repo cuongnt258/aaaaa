@@ -1,3 +1,5 @@
+import SimpleBarReact from 'simplebar-react';
+
 import PropTypes from 'prop-types';
 import { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -40,12 +42,10 @@ Nav.propTypes = {
 
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
-
   const isDesktop = useResponsive('up', 'lg');
-
   const { token } = useContext(Authen);
 
-  const hanldenullToken = () => {
+  const handleNullToken = () => {
     const isNonPeople = 'Ẩn danh';
     const arr = [];
     if (token === null || token === undefined || !token) {
@@ -58,16 +58,14 @@ export default function Nav({ openNav, onCloseNav }) {
   };
 
   useEffect(() => {
-    if (openNav) {
-      onCloseNav();
-    }
+    if (openNav) onCloseNav();
   }, [pathname]);
 
   const renderContent = (
     <Scrollbar
       sx={{
-        height: 1,
-        '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
+        height: '100vh',
+        '& .simplebar-content': { height: '100vh', display: 'flex', flexDirection: 'column' },
       }}>
       <Box sx={{ mb: 5, pt: 3, mx: 2.5 }}>
         <Link underline="none">
@@ -76,11 +74,11 @@ export default function Nav({ openNav, onCloseNav }) {
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {hanldenullToken()[0]?.RoleName}
+                {handleNullToken()[0]?.RoleName}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {hanldenullToken()[0]?.RoleName}
+                {handleNullToken()[0]?.RoleName}
               </Typography>
             </Box>
           </StyledAccount>

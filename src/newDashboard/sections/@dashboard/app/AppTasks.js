@@ -84,22 +84,18 @@ function TaskItem({ task, checked, onChange }) {
 
   const handleMarkComplete = () => {
     handleCloseMenu();
-    console.log('MARK COMPLETE', task.id);
   };
 
   const handleShare = () => {
     handleCloseMenu();
-    console.log('SHARE', task.id);
   };
 
   const handleEdit = () => {
     handleCloseMenu();
-    console.log('EDIT', task.id);
   };
 
   const handleDelete = () => {
     handleCloseMenu();
-    console.log('DELETE', task.id);
   };
 
   return (
@@ -112,8 +108,7 @@ function TaskItem({ task, checked, onChange }) {
           color: 'text.disabled',
           textDecoration: 'line-through',
         }),
-      }}
-    >
+      }}>
       <FormControlLabel
         control={<Checkbox checked={checked} onChange={onChange} />}
         label={task.label}
@@ -139,8 +134,7 @@ function TaskItem({ task, checked, onChange }) {
               borderRadius: 0.75,
             },
           },
-        }}
-      >
+        }}>
         <MenuItem onClick={handleMarkComplete}>
           <Iconify icon={'eva:checkmark-circle-2-fill'} sx={{ mr: 2 }} />
           Mark Complete

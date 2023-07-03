@@ -1,22 +1,28 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Box, Card, Container, Grid, Stack, TextField, Typography, Button } from '@mui/material';
 import ButtonCustomize from 'assets/theme/components/button/ButtonCustomize';
 import Page from 'components/Layout/Page';
 
 export default function AddCandidate() {
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    console.log({
-      userName: data.get('userName'),
-      password: data.get('password'),
-      fullName: data.get('fullName'),
-      address: data.get('address'),
-      groupId: data.get('groupId'),
-      campaignId: data.get('campaignId'),
-    });
+    alert(
+      JSON.stringify({
+        userName: data.get('userName'),
+        password: data.get('password'),
+        fullName: data.get('fullName'),
+        address: data.get('address'),
+        groupId: data.get('groupId'),
+        campaignId: data.get('campaignId'),
+      })
+    );
   };
+
+  const onClickCancel = () => navigate('/admin/candidates');
 
   return (
     <Page title="Danh sách ứng cử viên">
@@ -68,9 +74,18 @@ export default function AddCandidate() {
                   <TextField required fullWidth name="campaignId" label="Campaign ID" id="campaignId" />
                 </Grid>
               </Grid>
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Tạo
-              </Button>
+              <Grid container spacing={2}>
+                <Grid item sm={6}>
+                  <Button onClick={onClickCancel} fullWidth variant="contained" color="error" sx={{ mt: 3, mb: 2 }}>
+                    Hủy
+                  </Button>
+                </Grid>
+                <Grid item sm={6}>
+                  <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                    Tạo
+                  </Button>
+                </Grid>
+              </Grid>
             </Box>
           </Box>
         </Container>
