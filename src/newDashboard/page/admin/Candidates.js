@@ -107,7 +107,7 @@ export default function Candidates({ history }) {
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
-  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const candidate = useSelector(({ candidate }) => candidate) || [];
 
