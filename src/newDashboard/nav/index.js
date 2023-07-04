@@ -46,21 +46,16 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     overflowY: 'auto',
-    scrollbarWidth: 'thin',
-    scrollbarColor: 'red',
-    '&::-webkit-scrollbar-track': {
-      background: '#f1f1f1',
-      maxHeight: '150px' /* set the maximum height of the track */,
-      minHeight: '50px' /* set the minimum height of the track */,
+    '&::-webkit-scrollbar': {
+      width: '10px',
+      backgroundColor: '#eee',
     },
     '&::-webkit-scrollbar-thumb': {
-      background: '#888',
-      borderRadius: '10px',
-      width: '10px',
-      height: '10px',
+      backgroundColor: '#bbb',
+      borderRadius: '5px',
     },
     '&::-webkit-scrollbar-thumb:hover': {
-      background: '#555',
+      backgroundColor: '#9a9a9a',
     },
   },
 }));
@@ -90,9 +85,10 @@ export default function Nav({ openNav, onCloseNav }) {
   const renderContent = (
     <div
       className={classes.root}
-      sx={{
-        height: '100vh',
-      }}>
+      //   sx={{
+      //     height: '1000px',
+      //   }}
+    >
       <Box sx={{ mb: 5, pt: 3, mx: 2.5 }}>
         <Link underline="none">
           <StyledAccount>

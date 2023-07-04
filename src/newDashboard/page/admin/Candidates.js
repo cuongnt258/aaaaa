@@ -86,7 +86,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    overflowY: 'auto',
     scrollbarWidth: 'thin',
     scrollbarColor: 'red',
   },
@@ -107,7 +106,7 @@ export default function Candidates({ history }) {
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
 
   const candidate = useSelector(({ candidate }) => candidate) || [];
 
@@ -180,7 +179,7 @@ export default function Candidates({ history }) {
   const isUserNotFound = filterCandidate?.length === 0;
 
   return (
-    <Page title="Danh sách ứng cử viên">
+    <Page title="Danh sách ứng cử viên" className={classes.root}>
       <AlertDialog ref={refDialog} onConfirm={_onConfirmDelete} onCancel={_onCancelDelete} />
 
       <Container maxWidth={false}>
