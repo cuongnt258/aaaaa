@@ -48,9 +48,6 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'scroll',
     scrollbarWidth: 'thin',
     scrollbarColor: 'red',
-    '&::-webkit-scrollbar': {
-      width: '8px',
-    },
     '&::-webkit-scrollbar-track': {
       background: '#f1f1f1',
       maxHeight: '150px' /* set the maximum height of the track */,
@@ -60,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
       background: '#888',
       borderRadius: '10px',
       width: '10px',
+      height: '10px',
     },
     '&::-webkit-scrollbar-thumb:hover': {
       background: '#555',
@@ -94,7 +92,6 @@ export default function Nav({ openNav, onCloseNav }) {
       className={classes.root}
       sx={{
         height: '100vh',
-        '& .simplebar-content': { height: '100vh', display: 'flex', flexDirection: 'column' },
       }}>
       <Box sx={{ mb: 5, pt: 3, mx: 2.5 }}>
         <Link underline="none">
@@ -115,14 +112,6 @@ export default function Nav({ openNav, onCloseNav }) {
       </Box>
 
       <NavSection data={navConfig} />
-
-      <Box sx={{ flexGrow: 1 }} />
-
-      <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-        <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-          <Box component="img" src={logo} sx={{ width: 200, position: 'absolute', top: -100 }} />
-        </Stack>
-      </Box>
     </div>
   );
 

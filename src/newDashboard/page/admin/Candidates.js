@@ -89,22 +89,6 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'scroll',
     scrollbarWidth: 'thin',
     scrollbarColor: 'red',
-    '&::-webkit-scrollbar': {
-      width: '8px',
-    },
-    '&::-webkit-scrollbar-track': {
-      background: '#f1f1f1',
-      maxHeight: '150px' /* set the maximum height of the track */,
-      minHeight: '50px' /* set the minimum height of the track */,
-    },
-    '&::-webkit-scrollbar-thumb': {
-      background: '#888',
-      borderRadius: '10px',
-      width: '10px',
-    },
-    '&::-webkit-scrollbar-thumb:hover': {
-      background: '#555',
-    },
   },
 }));
 
