@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
-    overflowY: 'scroll',
+    overflowY: 'auto',
     scrollbarWidth: 'thin',
     scrollbarColor: 'red',
   },
